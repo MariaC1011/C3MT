@@ -24,23 +24,43 @@ public class MessageService {
         return messageRepository.getAll();
     }
     
-    public Optional<Message> getCategory(int id){
+    public Optional<Message> getMessage(int id){
         return messageRepository.getMessage(id);
     }
     public Message save (Message message){
         if (message.getIdMessage() == null){
             return messageRepository.save(message);
         }else {
-            Optional<Message> category1 = messageRepository.getMessage(message.getIdMessage());
-            if (category1.isEmpty()){
+            Optional<Message> message1 = messageRepository.getMessage(message.getIdMessage());
+            if (message1.isEmpty()){
                 return messageRepository.save(message);
             }else{
                 return message;
             }
         }
     }
-
-    public Optional<Message> getMessage(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        public Message update (Message message){
+        if (message.getIdMessage() !=null){
+             Optional<Message> e= messageRepository.getMessage(message.getIdMessage());
+            if(!e.isEmpty()){
+                if(message.getMessageText()!=null){
+                    e.get().setMessageText(message.getMessageText());
+                }
+                messageRepository.save(e.get());
+                return e.get();
+            }else{
+                return message;
+            }
+        }else{
+        return message;
+        }
     }
-}
+
+    public boolean deleteMessage (int id){
+        Boolean d = getMessage(id).map(message -> {
+            messageRepository.delete(message);
+            return true;
+        }).orElse(false);
+        return d;
+    }
+}  

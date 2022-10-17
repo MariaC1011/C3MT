@@ -32,6 +32,9 @@ public class BoatRepository {
         return extensionesCrud.save(boat);
     }
     
+     public void delete(Boat boat){
+        extensionesCrud.delete(boat);
+    }
 }
     
 

@@ -32,4 +32,7 @@ public class MessageRepository {
         return extensionesCrud.save(message);
     }
     
+     public void delete(Message message){
+        extensionesCrud.delete(message);
+    }
 }
